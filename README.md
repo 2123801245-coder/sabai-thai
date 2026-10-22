@@ -2,6 +2,14 @@
 
 面向中文学习者的泰语口语学习小应用。打开即用，无需账号；部署到 HTTPS 静态网站后支持添加到主屏幕和离线缓存。
 
+**在线使用：** https://2123801245-coder.github.io/sabai-thai/
+
+| 扫码使用（网页版） | 扫码下载（离线 ZIP） |
+| :---: | :---: |
+| ![扫码使用](assets/sabai-扫码使用.png) | ![扫码下载](assets/sabai-下载安装包.png) |
+
+Gitee 镜像：https://gitee.com/zhbedwin/sabai-thai ｜ 下载包：https://github.com/2123801245-coder/sabai-thai/releases/latest
+
 ## 产品内容
 
 - 66 条日常口语、语气词、聊天反应和泰网热词
