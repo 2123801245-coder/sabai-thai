@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>泰语换挡 · 五档语域学习资料</title>
+<style>
+/* ============================================================
+   泰语学习资料 · 共用版式（A4 竖版）
+   浅色纸底 + 金/红/绿三色标记。屏幕上是卡片，打印直接出 PDF。
+   版心 178mm（A4 210 − 左右各 16），所有字号用 pt，保证打印尺寸稳定。
+   —— 这份 CSS 是全套资料册的唯一版式来源：
+      books/*.html 只写内容，tools/build.mjs 把它内联进最终 HTML。
+   ============================================================ */
+@page { size: A4; margin: 0; }
+:root{
+  --paper:#fbf8f1; --ink:#241f18; --dim:#6d6557; --faint:#9a9181;
+  --line:#d9cdb6; --wash:#f3ecdd; --wash2:#efe6d4;
+  --gold:#9c6f22; --red:#a2352c; --green:#2c6650; --blue:#265a78;
+  --zh:"Songti SC","Noto Serif SC",serif;
+  --zhs:"PingFang SC","Noto Sans SC","Heiti SC",sans-serif;
+  --th:"Thonburi","Sukhumvit Set","Noto Sans Thai",serif;
+  --mono:"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#e6dfd0;font-family:var(--zhs);color:var(--ink);-webkit-font-smoothing:antialiased}
+.sheet{width:210mm;height:297mm;background:var(--paper);position:relative;overflow:hidden;
+       padding:15mm 16mm 16mm;page-break-after:always;break-after:page}
+.sheet:last-child{page-break-after:auto;break-after:auto}
+@media screen{body{display:flex;flex-direction:column;align-items:center;gap:7mm;padding:9mm 0}
+  .sheet{box-shadow:0 1.5mm 5mm rgba(40,30,10,.22)}}
+@media print{body{background:#fff}.sheet{box-shadow:none}}
+
+/* ---------- 页眉 ---------- */
+.kick{font-family:var(--mono);font-size:7.5pt;letter-spacing:.28em;color:var(--gold);text-transform:uppercase}
+h1{font-family:var(--zh);font-size:27pt;font-weight:600;line-height:1.15;margin-top:3mm;letter-spacing:.01em}
+h1 em{font-style:normal;color:var(--gold)}
+.sub{font-size:11pt;color:var(--dim);margin-top:3mm;line-height:1.6}
+.rule{height:.5pt;background:linear-gradient(90deg,var(--gold),rgba(156,111,34,.12));margin:5mm 0 0}
+.tag{display:inline-block;font-family:var(--mono);font-size:7pt;letter-spacing:.14em;color:#fff;background:var(--gold);
+     padding:1mm 2.4mm;border-radius:1mm}
+
+/* ---------- 页脚 ---------- */
+.foot{position:absolute;left:16mm;right:16mm;bottom:9mm;display:flex;justify-content:space-between;align-items:baseline;
+      border-top:.5pt solid var(--line);padding-top:2.6mm;font-size:7.6pt;color:var(--faint);letter-spacing:.03em}
+.foot b{color:var(--dim);font-weight:500}
+
+/* ---------- 通用块 ---------- */
+h2{font-family:var(--zh);font-size:15pt;font-weight:600;margin:0 0 3mm}
+h3{font-size:10.5pt;font-weight:600;letter-spacing:.02em}
+.lead{font-size:10.5pt;line-height:1.75;color:#3a332a}
+.note{font-size:8.2pt;line-height:1.65;color:var(--dim)}
+.th{font-family:var(--th);font-size:1.06em;line-height:1.45}
+.zh{font-size:9pt;color:var(--dim);line-height:1.6}
+.mono{font-family:var(--mono);font-size:8pt}
+
+/* ---------- 速查表 ---------- */
+table{width:100%;border-collapse:collapse;font-size:8.6pt;line-height:1.55}
+th{background:var(--wash);text-align:left;font-weight:600;font-size:8pt;letter-spacing:.06em;color:#4a4235;
+   padding:2.2mm 2.4mm;border-bottom:.7pt solid var(--line)}
+td{padding:2.2mm;border-bottom:.4pt solid var(--line);vertical-align:top}
+td.g{font-family:var(--th);font-size:11.5pt;line-height:1.7}
+tr:last-child td{border-bottom:.7pt solid var(--line)}
+.no{font-family:var(--mono);font-size:8pt;color:var(--gold);letter-spacing:.1em}
+.ttl{font-weight:600;font-size:9.4pt;margin-top:1mm}
+.sm{font-size:7.8pt;color:var(--dim)}
+.pill{display:inline-block;font-size:7pt;padding:.5mm 1.6mm;border:.4pt solid currentColor;border-radius:1mm;margin-right:1mm}
+.chg{display:grid;grid-template-columns:repeat(3,1fr);gap:0 8mm;margin-top:6mm}
+.chg .c{border-top:1.4pt solid var(--gold);padding-top:2.6mm}
+.chg h3{font-size:9.4pt}
+.chg p{font-size:8.2pt;color:var(--dim);line-height:1.75;margin-top:1.2mm}
+.chg .g{font-family:var(--th);font-size:11pt;margin-top:1.2mm;line-height:1.65}
+.red{color:var(--red)} .green{color:var(--green)} .gold{color:var(--gold)} .blue{color:var(--blue)} .dim{color:var(--dim)}
+
+/* ---------- 逐档详解 ---------- */
+.detail{border-top:.8pt solid var(--line);padding-top:3.4mm;margin-top:3.4mm}
+.detail.first{border-top:none;padding-top:0}
+.dhead{display:flex;align-items:baseline;gap:3mm;margin-bottom:2.5mm}
+.dno{font-family:var(--mono);font-size:9pt;color:#fff;background:var(--gold);padding:1mm 2mm;letter-spacing:.08em}
+.dname{font-family:var(--zh);font-size:13pt;font-weight:600}
+.duse{font-size:8.6pt;color:var(--dim);margin-left:auto;text-align:right}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 6mm}
+.lbl{font-family:var(--mono);font-size:7pt;letter-spacing:.16em;color:var(--faint);margin:2mm 0 1mm}
+.ex{border-left:1.2pt solid var(--wash2);padding-left:3mm;margin:1.5mm 0}
+.ex .th{font-size:12pt}
+.ex .zh{font-size:8.2pt}
+.warn{font-size:8.2pt;color:#4a4235;background:rgba(162,53,44,.06);border-left:1.2pt solid var(--red);
+      padding:2mm 3mm;line-height:1.6;margin-top:2mm}
+
+/* ---------- 坑 / 改写 ---------- */
+.trap{margin-top:4mm;border:.5pt solid var(--line);background:#fffdf8}
+.trap .thd{display:flex;align-items:baseline;gap:2.5mm;padding:2.2mm 3mm;background:var(--wash2)}
+.trap .thd .n{font-family:var(--mono);font-size:8pt;color:var(--red);letter-spacing:.1em}
+.trap .thd h3{font-size:9.6pt}
+.trap .rows{padding:1mm 3mm 2.6mm}
+.arow{display:grid;grid-template-columns:16mm 1fr;gap:2mm;padding:2.3mm 0;border-bottom:.3pt dotted var(--line);align-items:baseline}
+.arow:last-child{border-bottom:none}
+.arow .k{font-size:7.6pt;color:var(--faint);font-family:var(--mono);letter-spacing:.06em}
+.arow .v{font-size:9pt;line-height:1.7}
+.arow .v .th{font-size:11.5pt}
+
+/* ---------- 词表 ---------- */
+.words{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+.word{border:.5pt solid var(--line);background:#fffdf8;padding:2.4mm 3mm}
+.word .w{font-family:var(--th);font-size:12.5pt}
+.word .m{font-size:8.2pt;color:#3a332a;margin-top:.8mm;line-height:1.5}
+.word .s{font-size:7.2pt;color:var(--faint);margin-top:1mm}
+
+/* ---------- 练习 ---------- */
+.q{margin-top:3.5mm}
+.q .qh{font-size:9.2pt;font-weight:600}
+.q .qa{font-size:8.4pt;color:var(--dim);margin-top:1mm;line-height:1.6}
+.blank{display:inline-block;min-width:26mm;border-bottom:.5pt solid var(--faint);height:3.6mm}
+.ans{border-top:.5pt solid var(--line);margin-top:4mm;padding-top:3mm}
+.ans .row{font-size:8pt;color:var(--dim);line-height:1.75}
+.ans b{color:var(--ink);font-weight:600}
+
+/* ---------- 封面 ---------- */
+.cover{display:flex;flex-direction:column;height:100%;padding-bottom:14mm}
+.cover h1{font-size:44pt;margin-top:6mm;line-height:1.08}
+.cover .sub{font-size:12pt;margin-top:5mm;color:#3a332a}
+.lede{font-family:var(--zh);font-size:14pt;line-height:1.9;margin-top:9mm;padding-left:5mm;border-left:1.6pt solid var(--gold)}
+.toc{margin-top:11mm;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:0 9mm}
+.toc a,.toc div{display:grid;grid-template-columns:8mm 1fr 10mm;align-items:baseline;gap:2mm;
+     padding:2.2mm 0;border-top:.4pt solid var(--line);font-size:9.2pt;color:#3a332a}
+.toc .n{font-family:var(--mono);font-size:7.4pt;color:var(--gold);letter-spacing:.06em}
+.toc .p{font-family:var(--mono);font-size:7.4pt;color:var(--faint);text-align:right}
+.mini{margin-top:10mm;border-top:.5pt solid var(--line)}
+.mini .r{display:grid;grid-template-columns:14mm 1fr 62mm;gap:3mm;align-items:baseline;padding:1.6mm 0;border-bottom:.3pt dotted var(--line)}
+.mini .k{font-family:var(--mono);font-size:7.2pt;color:var(--gold);letter-spacing:.08em}
+.mini .th{font-size:11pt;line-height:1.5}
+.mini .zh{font-size:8.4pt;color:var(--dim);text-align:right}
+.quote{margin-top:9mm;font-family:var(--zh);font-size:11.5pt;line-height:1.95;color:#3a332a;padding-left:5mm;border-left:1.6pt solid var(--line)}
+.meta{margin-top:auto;font-size:8.6pt;color:#3a332a}
+.meta .row{display:grid;grid-template-columns:22mm 1fr;gap:3mm;padding:1.8mm 0;border-top:.4pt solid var(--line)}
+.meta .k{font-family:var(--mono);font-size:7.2pt;color:var(--faint);letter-spacing:.1em;padding-top:.6mm}
+
+/* ============================================================
+   以下为全套共用的补充组件（在 register 册原版式基础上扩展）
+   ============================================================ */
+
+/* ---------- 通用网格 ---------- */
+.g2,.g3,.g4{display:grid;gap:0 8mm;margin-top:5mm}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2>.c,.g3>.c,.g4>.c{border-top:1.4pt solid var(--gold);padding-top:2.6mm}
+.g2>.c h3,.g3>.c h3,.g4>.c h3{font-size:9.4pt}
+.g2>.c p,.g3>.c p,.g4>.c p{font-size:8.2pt;color:var(--dim);line-height:1.75;margin-top:1.2mm}
+.g2>.c .g,.g3>.c .g,.g4>.c .g{font-family:var(--th);font-size:11pt;margin-top:1.2mm;line-height:1.65}
+
+/* ---------- 元音格子 ---------- */
+.vgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:2.4mm;margin-top:5mm}
+.vgrid.g5{grid-template-columns:repeat(5,1fr)}
+.vtile{border:.5pt solid var(--line);background:#fffdf8;padding:2.2mm 1.6mm;text-align:center}
+.vtile .sh{font-family:var(--th);font-size:13.5pt;line-height:1.35}
+.vtile .py{font-family:var(--mono);font-size:6.8pt;color:var(--faint);margin-top:.9mm;letter-spacing:.02em}
+.vtile .lb{font-size:7.4pt;color:var(--dim);margin-top:.7mm;line-height:1.4}
+.vtile.short{border-color:var(--blue);background:#f6fafc}
+.vtile.long{border-color:var(--gold);background:#fffaf0}
+.vtile.comp{border-color:var(--green);background:#f5faf7}
+.vgrid .hd{font-family:var(--mono);font-size:6.8pt;letter-spacing:.08em;color:var(--faint);
+            text-align:center;padding-bottom:1mm;border-bottom:.4pt solid var(--line)}
+
+/* ---------- 声调卡 ---------- */
+.tones{display:grid;grid-template-columns:repeat(5,1fr);gap:0 4mm;margin-top:6mm}
+.tone{border-top:1.4pt solid var(--gold);padding-top:2.6mm}
+.tone .mark{font-family:var(--th);font-size:19pt;line-height:1.2}
+.tone .nm{font-family:var(--zh);font-size:10.5pt;font-weight:600;margin-top:1.4mm}
+.tone .en{font-family:var(--mono);font-size:7pt;color:var(--faint);letter-spacing:.08em;margin-top:.6mm}
+.tone .ds{font-size:8pt;color:var(--dim);line-height:1.6;margin-top:1.4mm}
+.tone .ex{font-family:var(--th);font-size:10.5pt;margin-top:1.4mm;line-height:1.5}
+.tone .exz{font-size:7.6pt;color:var(--dim);margin-top:.6mm}
+
+/* ---------- 步骤条 ---------- */
+.steps{margin-top:5mm}
+.step{display:grid;grid-template-columns:11mm 1fr;gap:3mm;padding:2.8mm 0;border-bottom:.4pt solid var(--line);align-items:baseline}
+.step:last-child{border-bottom:none}
+.step .n{font-family:var(--mono);font-size:8.6pt;color:#fff;background:var(--gold);padding:.9mm 1.6mm;text-align:center;letter-spacing:.06em}
+.step .t{font-size:10pt;font-weight:600}
+.step .d{font-size:8.4pt;color:var(--dim);line-height:1.65;margin-top:.8mm}
+
+/* ---------- 来源清单 ---------- */
+.src{margin-top:5mm;border-top:.6pt solid var(--line)}
+.src .r{display:grid;grid-template-columns:9mm 1fr;gap:3mm;padding:2.2mm 0;border-bottom:.3pt dotted var(--line);align-items:baseline}
+.src .k{font-family:var(--mono);font-size:7.2pt;color:var(--gold);letter-spacing:.06em}
+.src .v{font-size:8.2pt;line-height:1.7;color:#3a332a}
+.src .v code{font-family:var(--mono);font-size:7.4pt;color:var(--dim);word-break:break-all}
+.star{color:var(--gold);font-weight:600}
+.star2{color:var(--blue);font-weight:600}
+
+/* ---------- 提示框 ---------- */
+.box{border:.5pt solid var(--line);background:var(--wash);padding:3.4mm 4mm;margin-top:5mm}
+.box .bt{font-family:var(--mono);font-size:7.4pt;letter-spacing:.16em;color:var(--gold)}
+.box .bd{font-size:8.6pt;line-height:1.75;color:#3a332a;margin-top:1.8mm}
+.box.warnb{background:rgba(162,53,44,.06);border-color:var(--red)}
+.box.warnb .bt{color:var(--red)}
+.box.greenb{background:rgba(44,102,80,.06);border-color:var(--green)}
+.box.greenb .bt{color:var(--green)}
+.box.blueb{background:rgba(38,90,120,.06);border-color:var(--blue)}
+.box.blueb .bt{color:var(--blue)}
+
+/* ---------- 对照（左错 / 右对） ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:0 6mm;margin-top:4mm}
+.duo .bad{border-left:1.4pt solid var(--red);padding-left:3mm}
+.duo .good{border-left:1.4pt solid var(--green);padding-left:3mm}
+.duo .cap{font-family:var(--mono);font-size:7pt;letter-spacing:.14em;color:var(--faint);margin-bottom:1.2mm}
+.duo .bad .cap{color:var(--red)} .duo .good .cap{color:var(--green)}
+.duo .th{font-size:11.5pt}
+.duo .zh{font-size:8.2pt;margin-top:.8mm}
+
+/* ---------- 大字泰文 ---------- */
+.bigth{font-family:var(--th);font-size:15pt;line-height:1.5}
+.mid{font-family:var(--th);font-size:13pt;line-height:1.55}
+.rt{font-family:var(--mono);font-size:7.6pt;color:var(--faint);letter-spacing:.02em}
+
+/* ---------- 目录（全集用） ---------- */
+.setlist{margin-top:8mm}
+.setlist .r{display:grid;grid-template-columns:12mm 1fr 34mm 12mm;gap:3mm;align-items:baseline;
+     padding:2.6mm 0;border-top:.5pt solid var(--line)}
+.setlist .r.head{border-top:1pt solid var(--gold);padding-bottom:1.6mm}
+.setlist .r.head span{font-family:var(--mono);font-size:7.2pt;letter-spacing:.14em;color:var(--faint)}
+.setlist .n{font-family:var(--mono);font-size:8pt;color:var(--gold);letter-spacing:.08em}
+.setlist .t{font-size:11pt;font-weight:600}
+.setlist .d{font-size:8pt;color:var(--dim);line-height:1.5;margin-top:.6mm}
+.setlist .p{font-family:var(--mono);font-size:7.6pt;color:var(--faint);text-align:right}
+.setlist .pg{font-family:var(--mono);font-size:8.4pt;color:var(--dim);text-align:right}
+
+/* ============================================================
+   手机阅读（只作用于屏幕，不影响 A4 打印与 PDF）
+   out/*.html 由 build.mjs 注入 viewport meta，窄屏时把 A4 页摊成单栏。
+   断点 760px 低于 build.mjs 审计用的 794px 视口，所以不影响版面审计。
+   ============================================================ */
+@media screen and (max-width:760px){
+  body{padding:0;gap:0;display:block;background:var(--paper)}
+  .sheet{width:100%;height:auto;min-height:0;overflow:visible;page-break-after:auto;
+         padding:7mm 5mm 8mm;box-shadow:none}
+  .sheet + .sheet{border-top:2px solid rgba(120,100,70,.18)}
+  .foot{position:static;margin-top:8mm}
+
+  /* 封面与目录：A4 的满高撑不满手机屏，改成正常流 */
+  .cover{height:auto;padding-bottom:2mm}
+  .cover h1{font-size:29pt;margin-top:4mm}
+  .cover .sub{font-size:11pt}
+  .lede{font-size:12pt;line-height:1.85;margin-top:7mm}
+  .quote{font-size:10.5pt;margin-top:7mm}
+  .meta{margin-top:7mm}
+
+  /* 多栏一律改单栏或双栏 */
+  .toc,.two,.duo,.words,.g2,.g3,.g4,.chg{grid-template-columns:1fr;gap:0}
+  .toc{grid-auto-flow:row;grid-template-rows:none}
+  .g2>.c,.g3>.c,.g4>.c,.chg .c{margin-top:4mm}
+  .words .word{margin-top:3mm}
+  .tones{grid-template-columns:1fr 1fr;gap:0 5mm}
+  .vgrid,.vgrid.g5{grid-template-columns:repeat(4,1fr);gap:2mm}
+
+  /* 列表型网格：收掉固定列宽 */
+  .mini .r{grid-template-columns:12mm 1fr}
+  .mini .zh{grid-column:2;text-align:left}
+  .meta .row{grid-template-columns:22mm 1fr}
+  .arow{grid-template-columns:12mm 1fr}
+  .step{grid-template-columns:9mm 1fr}
+  .src .r{grid-template-columns:8mm 1fr}
+  .setlist .r{grid-template-columns:10mm 1fr}
+  .setlist .r.head{display:none}
+  .setlist .pg{grid-column:2;text-align:left}
+  .setlist .p{display:none}
+  .dhead{flex-wrap:wrap;row-gap:1mm}
+  .duse{margin-left:0;text-align:left;width:100%}
+
+  /* 表格：A4 的 3–5 列在 390px 里塞不下，改成表内横向滚动，不要挤成一列一字 */
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+        font-size:8pt;line-height:1.55}
+  th,td{max-width:58vw;padding:1.8mm 1.6mm}
+  th{white-space:nowrap}
+  /* A4 里写死的列宽（如 width:44mm）在手机上会挤掉最后一列，改成按内容分配 */
+  th[style],td[style]{width:auto!important}
+  td.g{font-size:11pt}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ 01 封面 ============ -->
+<section class="sheet" id="01-register-p1">
+  <div class="cover">
+    <div>
+      <div class="kick">THAI REGISTER · ระดับภาษา · REFERENCE</div>
+      <h1>泰语<em>换挡</em></h1>
+      <div class="sub">五档语域 · 学习资料 <span style="color:var(--faint)">/</span> 中文母语者版</div>
+      <div class="rule"></div>
+    </div>
+
+    <div class="lede">同一件事，五个说法。<br>换错一档，意思还在，<em style="color:var(--gold)">关系没了</em>。</div>
+
+    <div class="toc">
+      <div><span class="n">01</span><span>封面与使用说明</span><span class="p">p.1</span></div>
+      <div><span class="n">02</span><span>五档速查（可单独打印贴墙）</span><span class="p">p.2</span></div>
+      <div><span class="n">03</span><span>最正式的两档：公文 / 告示</span><span class="p">p.3</span></div>
+      <div><span class="n">04</span><span>日常的三档：职场 / 朋友 / 熟人</span><span class="p">p.4</span></div>
+      <div><span class="n">05</span><span>最常踩的三个坑（含改写对照）</span><span class="p">p.5</span></div>
+      <div><span class="n">06</span><span>句尾语气词：ครับ / นะ / สิ / ดิ …</span><span class="p">p.6</span></div>
+      <div><span class="n">07</span><span>流行语附录：寿命最短的一层</span><span class="p">p.7</span></div>
+      <div><span class="n">08</span><span>五道练习 + 参考 + 资料边界</span><span class="p">p.8</span></div>
+    </div>
+
+    <div class="mini">
+      <div class="r"><span class="k">01 公文</span><span class="th">ขอความกรุณาตรวจสอบเอกสาร</span><span class="zh">恳请您核查文件</span></div>
+      <div class="r"><span class="k">02 告示</span><span class="th">ห้ามทิ้งขยะ</span><span class="zh">禁止乱扔垃圾</span></div>
+      <div class="r"><span class="k">03 职场</span><span class="th">รบกวนช่วยดูเอกสารให้หน่อยครับ</span><span class="zh">麻烦帮我看一下文件</span></div>
+      <div class="r"><span class="k">04 朋友</span><span class="th">ช่วยดูเอกสารให้หน่อยได้มั้ย</span><span class="zh">能帮我看下吗</span></div>
+      <div class="r"><span class="k">05 熟人</span><span class="th">ดูให้หน่อยดิ</span><span class="zh">帮我看下呗</span></div>
+    </div>
+
+    <div class="quote">先学最正式的一档，再学最随便的一档。<br>中间那几档，会在真实场合里自己长出来。</div>
+
+    <div class="meta">
+      <div class="row"><div class="k">适用</div><div>学过泰文字母与基本句型、开始跟泰国人打交道的成年人；不假设你已经在泰国长期生活。</div></div>
+      <div class="row"><div class="k">怎么用</div><div>第 2 页是速查总表，打印贴墙就够用；第 3–4 页逐档详解；第 5 页是三个最常踩的坑；第 6–7 页查语气词和流行语；第 8 页练习与答案。</div></div>
+      <div class="row"><div class="k">配套</div><div>同名影片《泰语换挡》176.9 秒，能听到每一档的语速与语调——纸面只管「用哪档、用什么词」。</div></div>
+      <div class="row"><div class="k">边界</div><div>五档是<b>教学框架</b>，不是国家标准；例句为按语法与搭配自拟，未经母语者逐句审校。流行语条目只到「泰媒盘点」的证据等级，详见第 7–8 页。</div></div>
+      <div class="row"><div class="k">版本</div><div class="mono">2026-10 · v1 · 与《泰语换挡》成片同源</div></div>
+    </div>
+  </div>
+  <div class="foot"><span><b>泰语换挡</b> · 五档语域学习资料</span><span>01 / 08</span></div>
+</section>
+
+<!-- ============ 02 速查总表 ============ -->
+<section class="sheet" id="01-register-p2">
+  <div class="kick">02 · QUICK TABLE</div>
+  <h1>五档速查</h1>
+  <div class="sub">从上到下：越来越短、礼貌词越来越少、语气词越来越多。变的不是语法，是你和对方的距离。</div>
+  <div class="rule"></div>
+
+  <table style="margin-top:6mm">
+    <thead>
+      <tr><th style="width:26mm">档</th><th style="width:30mm">典型场合</th><th style="width:70mm">例句</th><th>中文 / 判据</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="no">01</span><div class="ttl">公文</div><div class="sm">书信 · 合同</div></td>
+        <td>写给机构与陌生人</td>
+        <td class="g">ขอความกรุณาตรวจสอบเอกสาร</td>
+        <td>恳请您核查文件<div class="sm">完整句式 · ขอความกรุณา · 无语气词</div></td>
+      </tr>
+      <tr>
+        <td><span class="no">02</span><div class="ttl">告示</div><div class="sm">通知 · 规章</div></td>
+        <td>写给所有路过的人</td>
+        <td class="g">ห้ามทิ้งขยะ</td>
+        <td>禁止乱扔垃圾<div class="sm">ห้าม + 动词 · 无主语 · 不问理由</div></td>
+      </tr>
+      <tr>
+        <td><span class="no">03</span><div class="ttl">职场</div><div class="sm">同事 · 服务</div></td>
+        <td>熟但不亲</td>
+        <td class="g">รบกวนช่วยดูเอกสารให้หน่อยครับ</td>
+        <td>麻烦帮我看一下文件<div class="sm">รบกวน / ช่วย / หน่อย / ครับ 四层缓冲</div></td>
+      </tr>
+      <tr>
+        <td><span class="no">04</span><div class="ttl">朋友</div><div class="sm">平辈 · 熟人</div></td>
+        <td>关系够近</td>
+        <td class="g">ช่วยดูเอกสารให้หน่อยได้มั้ย</td>
+        <td>能帮我看下吗<div class="sm">ได้มั้ย 征询 · ครับ 撤掉 · 句尾变软</div></td>
+      </tr>
+      <tr>
+        <td><span class="no">05</span><div class="ttl">熟人</div><div class="sm">铁哥们 · 网络</div></td>
+        <td>铁哥们与网友</td>
+        <td class="g">ดูให้หน่อยดิ</td>
+        <td>帮我看下呗（带点催）<div class="sm">ดิ 催促 · 礼貌词清零 · 只对真熟人</div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:8mm;border:.5pt solid var(--line);background:var(--wash);padding:3.5mm 4mm">
+    <div class="mono" style="color:var(--gold);letter-spacing:.16em">三件事决定档位</div>
+    <div style="display:flex;gap:4mm;margin-top:2.4mm;font-size:10.5pt">
+      <span>对谁</span><span class="dim">×</span><span>在哪</span><span class="dim">×</span><span>说还是写</span>
+    </div>
+    <div class="note" style="margin-top:2.4mm">
+      对谁：上级 / 陌生人 / 同事 / 朋友 / 铁哥们。在哪：公文、告示、柜台、饭桌。说还是写：说可以短句加语气词，写要完整结构和连接词。<br>
+      拿不准时往上取一档：多一个 ครับ 只是显得客气，少一个可能就是失礼。
+    </div>
+  </div>
+
+  <div style="margin-top:7mm;font-size:8.8pt;color:var(--dim);letter-spacing:.04em">换挡时，真正改的是下面三样；其余部分基本不动。</div>
+
+  <div class="chg">
+    <div class="c"><h3>句子长度</h3><div class="g">เนื่องจาก…จึง…</div><p>书面向子完整、因果挂在一个句子里；口语拆成两句，用 <span class="th">เลย</span> 收结果。</p></div>
+    <div class="c"><h3>礼貌词 / 语气词</h3><div class="g">ครับ · นะ · สิ · ดิ</div><p>礼貌词越往下越少，语气词越往下越多；第 3 档靠 รบกวน / ช่วย / หน่อย / ครับ 四层缓冲。</p></div>
+    <div class="c"><h3>称呼</h3><div class="g">คุณ → พี่ → เธอ → มึง</div><p>称呼比句子更容易得罪人；不确定时用 <span class="th">พี่/คุณ</span>，或直接省略主语。</p></div>
+  </div>
+
+  <div class="foot"><span><b>泰语换挡</b> · 五档速查</span><span>02 / 08</span></div>
+</section>
+
+<!-- ============ 03 逐档详解 01–02 ============ -->
+<section class="sheet" id="01-register-p3">
+  <div class="kick">03 · GEARS 01–02</div>
+  <h1>最正式的两档</h1>
+  <div class="sub">这两档不是「更客气的口语」，是另一套写法：句子完整、连接词明确、几乎不带语气词。</div>
+  <div class="rule"></div>
+
+  <div class="detail first" style="margin-top:6mm">
+    <div class="dhead">
+      <span class="dno">01</span>
+      <span class="dname">公文 · 书信</span>
+      <span class="duse">写给机构、王室、不认识的人</span>
+    </div>
+    <div class="two">
+      <div>
+        <div class="lbl">长什么样</div>
+        <div class="lead">完整主谓宾，靠 <span class="th">ขอความกรุณา</span>（恳请）、<span class="th">จึงเรียนมาเพื่อโปรดพิจารณา</span>（兹呈请考虑）这类套语推进；不用 <span class="th">ครับ/ค่ะ</span> 收尾，也不用语气词。</div>
+        <div class="lbl">什么时候用</div>
+        <div class="lead">正式信件、合同、投诉函、给学校或政府部门的申请。落款另有一套固定说法。</div>
+      </div>
+      <div>
+        <div class="lbl">例句</div>
+        <div class="ex"><div class="th">ขอความกรุณาตรวจสอบเอกสาร</div><div class="zh">恳请您核查文件</div></div>
+        <div class="ex"><div class="th">ข้าพเจ้าขอแสดงความนับถือ</div><div class="zh">谨致敬意（正式书信的落款套语，不是日常问候）</div></div>
+        <div class="ex"><div class="th">ทรงขอบใจทุกคนทุกฝ่าย</div><div class="zh">国王感谢「各方每一位」——<span class="th">ทรง</span> 是王室专用动词前缀</div></div>
+      </div>
+    </div>
+    <div class="warn">最容易在这里犯的错不是「不够正式」，而是把这一档<b>搬进日常</b>：<span class="th">เนื่องจาก…จึง…</span> 的结构写报告没问题，说给朋友像在念公文（见第 5 页）。</div>
+  </div>
+
+  <div class="detail">
+    <div class="dhead">
+      <span class="dno">02</span>
+      <span class="dname">告示 · 规章</span>
+      <span class="duse">写给所有路过的人</span>
+    </div>
+    <div class="two">
+      <div>
+        <div class="lbl">长什么样</div>
+        <div class="lead">祈使句，主语缺席，动词打头。<span class="th">ห้าม</span>（禁止）最硬；<span class="th">กรุณา</span>（请）稍软；<span class="th">ห้าม</span> 后面直接跟动作，不解释理由。</div>
+        <div class="lbl">什么时候用</div>
+        <div class="lead">门口、电梯、厕所、停车场、公园的牌子；公司规章、活动须知。</div>
+      </div>
+      <div>
+        <div class="lbl">例句</div>
+        <div class="ex"><div class="th">ห้ามทิ้งขยะ</div><div class="zh">禁止乱扔垃圾（清莱一间寺院的告示牌原文）</div></div>
+        <div class="ex"><div class="th">กรุณาปิดมือถือ</div><div class="zh">请关闭手机（同一档，但用 กรุณา 放软）</div></div>
+      </div>
+    </div>
+    <div class="warn">这一档最容易被误用成「对一个人下命令」。对着朋友说 <span class="th">ห้าม…</span>，听起来不是提醒，是训人；要请人做事，退回第 3–4 档。</div>
+  </div>
+
+  <div style="margin-top:7mm;font-size:8.8pt;color:var(--dim);letter-spacing:.04em">正式文本一眼可认的四个信号</div>
+  <div class="chg" style="grid-template-columns:repeat(4,1fr);gap:0 6mm">
+    <div class="c"><h3>完整句式</h3><div class="g">ประธาน + กริยา + กรรม</div><p>主谓宾齐，因果用连接词挂在同一句里，不靠上下文补。</p></div>
+    <div class="c"><h3>固定套语</h3><div class="g">ขอความกรุณา</div><p>开头与结尾都有固定说法；套语本身承担一半的礼貌，不需要再加语气词。</p></div>
+    <div class="c"><h3>敬语主语</h3><div class="g">ข้าพเจ้า</div><p>说自己用「本人」而不是 ผม/ฉัน；涉及王室另有 ทรง 这类专用前缀。</p></div>
+    <div class="c"><h3>无语气词</h3><div class="g">ไม่ใช้ ครับ / นะ / สิ</div><p>句尾干净。加了反而像在写一封不认真的信。</p></div>
+  </div>
+
+  <div class="quote" style="margin-top:7mm;font-size:10.5pt">检验：一段文字如果能直接念给朋友听，它就还不够正式；反过来，如果一句话必须念完才能听懂，它就不适合放进聊天。</div>
+
+  <div class="foot"><span><b>泰语换挡</b> · 01 公文 / 02 告示</span><span>03 / 08</span></div>
+</section>
+
+<!-- ============ 04 逐档详解 03–05 ============ -->
+<section class="sheet" id="01-register-p4">
+  <div class="kick">04 · GEARS 03–05</div>
+  <h1>日常的三档</h1>
+  <div class="sub">这三档才是每天都在用的。它们的差别不在词汇量，在「缓冲」有多少层。</div>
+  <div class="rule"></div>
+
+  <div class="detail first" style="margin-top:6mm">
+    <div class="dhead">
+      <span class="dno">03</span>
+      <span class="dname">职场 · 服务</span>
+      <span class="duse">熟但不亲，要留余地</span>
+    </div>
+    <div class="two">
+      <div>
+        <div class="lbl">四层缓冲</div>
+        <div class="lead"><span class="th">รบกวน</span>（打扰你）＋ <span class="th">ช่วย</span>（帮忙）＋ <span class="th">หน่อย</span>（一点点）＋ <span class="th">ครับ</span>（句尾礼貌）。撤掉任何一层，句子就更直接一点。</div>
+        <div class="lbl">什么时候用</div>
+        <div class="lead">同事、房东、店员、司机、医院柜台——认识，但还没到可以开玩笑的距离。</div>
+      </div>
+      <div>
+        <div class="lbl">例句</div>
+        <div class="ex"><div class="th">รบกวนช่วยดูเอกสารให้หน่อยครับ</div><div class="zh">麻烦帮我看一下文件</div></div>
+        <div class="ex"><div class="th">รบกวนสอบถามหน่อยครับ</div><div class="zh">打扰一下，想问个事（柜台／电话开场）</div></div>
+      </div>
+    </div>
+    <div class="warn"><span class="th">ครับ</span> 只负责句尾的礼貌，不负责句子的软硬。只说 <span class="th">ดูเอกสารให้หน่อยครับ</span> 也礼貌，但比带 <span class="th">รบกวน/ช่วย</span> 的版本更像在派活。</div>
+  </div>
+
+  <div class="detail">
+    <div class="dhead">
+      <span class="dno">04</span>
+      <span class="dname">朋友 · 平辈</span>
+      <span class="duse">关系够近才去掉敬语</span>
+    </div>
+    <div class="two">
+      <div>
+        <div class="lbl">长什么样</div>
+        <div class="lead">保留 <span class="th">ช่วย…หน่อย</span> 的请求框架，句尾换成 <span class="th">ได้มั้ย</span>（可以吗）征询；<span class="th">ครับ</span> 撤掉，靠语调兜住礼貌。</div>
+        <div class="lbl">什么时候用</div>
+        <div class="lead">同龄朋友、熟悉的邻居、一起吃过几次饭的人。对上级用这一档，问题不在语法，在距离。</div>
+      </div>
+      <div>
+        <div class="lbl">例句</div>
+        <div class="ex"><div class="th">ช่วยดูเอกสารให้หน่อยได้มั้ย</div><div class="zh">能帮我看下吗</div></div>
+        <div class="ex"><div class="th">ไปกินหมูกระทะป่ะ</div><div class="zh">去吃泰式烤肉不（<span class="th">ป่ะ</span> 是口语邀请，不是疑问词）</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail">
+    <div class="dhead">
+      <span class="dno">05</span>
+      <span class="dname">熟人 · 网络</span>
+      <span class="duse">越短越亲，也越容易翻车</span>
+    </div>
+    <div class="two">
+      <div>
+        <div class="lbl">长什么样</div>
+        <div class="lead">三个词说完，动词打头，语气词收尾：<span class="th">ดิ</span>（催）、<span class="th">ป่ะ</span>（邀请）、<span class="th">เลย</span>（直接）。礼貌词清零。</div>
+        <div class="lbl">什么时候用</div>
+        <div class="lead">只对真熟人：一起长大的朋友、天天见的同事、家里人。对不熟的人用 <span class="th">ดิ</span>，会被听成命令。</div>
+      </div>
+      <div>
+        <div class="lbl">例句</div>
+        <div class="ex"><div class="th">ดูให้หน่อยดิ</div><div class="zh">帮我看下呗（带点催）</div></div>
+        <div class="ex"><div class="th">ฝนตกหนักมาก รถติดเลย</div><div class="zh">雨超大，直接堵死（对比第 3 页的书面版）</div></div>
+      </div>
+    </div>
+    <div class="warn"><b>对上司用 <span class="th">มึง</span>，语法没错，关系错了。</b><span class="th">กู/มึง</span> 在密友之间是亲近，对象换错就是事故。</div>
+  </div>
+
+  <div style="margin-top:5mm;font-size:8.8pt;color:var(--dim);letter-spacing:.04em">同一句请求，缓冲层数在变</div>
+  <div class="mini" style="margin-top:1.5mm">
+    <div class="r"><span class="k">03 职场</span><span class="th">รบกวนช่วยดูเอกสารให้หน่อยครับ</span><span class="zh">四层缓冲</span></div>
+    <div class="r"><span class="k">04 朋友</span><span class="th">ช่วยดูเอกสารให้หน่อยได้มั้ย</span><span class="zh">两层 + 征询</span></div>
+    <div class="r"><span class="k">05 熟人</span><span class="th">ดูให้หน่อยดิ</span><span class="zh">零缓冲</span></div>
+  </div>
+
+  <div class="foot"><span><b>泰语换挡</b> · 03 职场 / 04 朋友 / 05 熟人</span><span>04 / 08</span></div>
+</section>
+
+<!-- ============ 05 三个坑 ============ -->
+<section class="sheet" id="01-register-p5">
+  <div class="kick">05 · THREE TRAPS</div>
+  <h1>最常踩的三个坑</h1>
+  <div class="sub">都不是语法错误，都是档位错误。下面每条都给「你写的 / 该写的 / 为什么」。</div>
+  <div class="rule"></div>
+
+  <div class="trap" style="margin-top:6mm">
+    <div class="thd"><span class="n">TRAP 01</span><h3>把书面语搬进日常</h3></div>
+    <div class="rows">
+      <div class="arow"><div class="k">你写的</div><div class="v th">เนื่องจากฝนตกหนัก การเดินทางจึงล่าช้า</div></div>
+      <div class="arow"><div class="k">该写的</div><div class="v th">ฝนตกหนักมาก รถติดเลย</div></div>
+      <div class="arow"><div class="k">为什么</div><div class="v">书面语用 <span class="th">เนื่องจาก…จึง…</span> 把因果挂在一个句子里；口语拆成两个短句，用 <span class="th">เลย</span> 收尾。句子没错，是场合错了。</div></div>
+    </div>
+  </div>
+
+  <div class="trap">
+    <div class="thd"><span class="n">TRAP 02</span><h3>把口语拼写写进公文</h3></div>
+    <div class="rows">
+      <div class="arow"><div class="k">聊天里</div><div class="v th">คับ</div></div>
+      <div class="arow"><div class="k">公文里</div><div class="v th">ครับ</div></div>
+      <div class="arow"><div class="k">为什么</div><div class="v"><span class="th">คับ</span> 是口语发音的写法，不是新标准。正式文本、公文、考试仍写 <span class="th">ครับ</span>——写错不是「时尚」，是穿拖鞋面试。</div></div>
+    </div>
+  </div>
+
+  <div class="trap">
+    <div class="thd"><span class="n">TRAP 03</span><h3>对不该用的人用 มึง</h3></div>
+    <div class="rows">
+      <div class="arow"><div class="k">对朋友</div><div class="v"><span class="th">มึง</span> 可以，语气还显亲近（但要看关系深浅和场合）</div></div>
+      <div class="arow"><div class="k">对上司</div><div class="v">换成 <span class="th">พี่</span> / <span class="th">คุณ</span>，或者干脆省略主语</div></div>
+      <div class="arow"><div class="k">为什么</div><div class="v">同一句话，换一个称呼就从「哥们」变成「冒犯」。学泰语先学分人称，再学句子。</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:5mm;border-top:.8pt solid var(--line);padding-top:3.6mm">
+    <div class="lbl" style="margin-top:0">一条通用检查</div>
+    <div class="lead">写完一句话，问自己两件事：<b>这句是写给谁看的</b>、<b>对方会不会需要读到第二遍才知道我在拒绝</b>。第一件决定档位，第二件决定要不要加缓冲。</div>
+  </div>
+
+  <div class="chg" style="grid-template-columns:1fr 1fr;gap:0 9mm;margin-top:6mm">
+    <div class="c"><h3>03 与 04 的分界</h3><div class="g">ครับ ↔ ได้มั้ย</div><p>留 ครับ 是承认「还不熟」；换成 ได้มั้ย 是把决定权交给对方。两者同时出现，就偏正式了。</p></div>
+    <div class="c"><h3>04 与 05 的分界</h3><div class="g">ดิ</div><p><span class="th">ดิ</span> 一出现，句子就从「请求」变成「催促」。关系没到那一步，别用它。</p></div>
+  </div>
+
+  <div style="margin-top:6mm;border-left:1.6pt solid var(--gold);padding-left:3.5mm;font-size:9.6pt;line-height:1.9;color:#3a332a">判断标准只有一条：这句话说完，对方还需不需要替你补一层礼貌？</div>
+
+  <div class="foot"><span><b>泰语换挡</b> · 三个坑</span><span>05 / 08</span></div>
+</section>
+
+<!-- ============ 06 语气词 ============ -->
+<section class="sheet" id="01-register-p6">
+  <div class="kick">06 · PARTICLES</div>
+  <h1>句尾语气词</h1>
+  <div class="sub">泰语的「礼貌」大半落在句尾。它们没有一对一中文翻译，按「场景 + 例句」记，别记等号。</div>
+  <div class="rule"></div>
+
+  <table style="margin-top:6mm">
+    <thead>
+      <tr><th style="width:21mm">词</th><th style="width:28mm">作用</th><th style="width:60mm">例句</th><th>注意</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="g">ครับ / ค่ะ</td><td>句尾礼貌（男 / 女）</td><td class="g">รบกวนช่วยดูเอกสารให้หน่อยครับ</td><td>礼貌的地板，不是万能软化剂；句子本身太硬时，加它也不够。</td></tr>
+      <tr><td class="g">นะ</td><td>软化、提醒</td><td class="g">ไปก่อนนะ</td><td>我先走了哦。对上级用会显得过于亲昵。</td></tr>
+      <tr><td class="g">สิ</td><td>催、强调</td><td class="g">ทำสิ</td><td>做啊。关系不够近时听起来像不耐烦。</td></tr>
+      <tr><td class="g">ดิ</td><td>随意催促</td><td class="g">ดูให้หน่อยดิ</td><td>只对真熟人；对陌生人用会被听成命令。</td></tr>
+      <tr><td class="g">ล่ะ</td><td>「那…呢」</td><td class="g">แล้วเธอล่ะ</td><td>那你呢。也常用于追问，语气随语调变。</td></tr>
+      <tr><td class="g">หรอก</td><td>多与否定连用</td><td class="g">ไม่รู้หรอก</td><td>才不知道呢。单独用会显得敷衍。</td></tr>
+      <tr><td class="g">ป่ะ</td><td>口语邀请 / 确认</td><td class="g">ไปกินหมูกระทะป่ะ</td><td>去吃烤肉不。书面写作 ป่ะ 或 หรือเปล่า，正式文本用后者。</td></tr>
+      <tr><td class="g">เลย</td><td>「于是 / 直接」</td><td class="g">รถติดเลย</td><td>把结果直接甩出来，口语里替代书面因果结构。</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:6mm;border:.5pt solid var(--line);background:var(--wash);padding:3.5mm 4mm">
+    <div class="mono" style="color:var(--gold);letter-spacing:.16em">怎么练</div>
+    <div class="note" style="margin-top:2mm">
+      同一句话，录五个版本：去掉 ครับ、加上 นะ、换成 ดิ、拉长语调、加快语速。让泰国朋友听哪一版「能对老板说」——比背规则快。
+    </div>
+  </div>
+
+  <div style="margin-top:7mm;font-size:8.8pt;color:var(--dim);letter-spacing:.04em">同一个请求，三种收尾，温度差在这里</div>
+  <div class="mini" style="margin-top:1.5mm">
+    <div class="r"><span class="k">+ ครับ</span><span class="th">ช่วยดูเอกสารให้หน่อยครับ</span><span class="zh">客气，仍然直接</span></div>
+    <div class="r"><span class="k">+ ได้มั้ย</span><span class="th">ช่วยดูเอกสารให้หน่อยได้มั้ย</span><span class="zh">征询，把决定权交出去</span></div>
+    <div class="r"><span class="k">+ ดิ</span><span class="th">ดูให้หน่อยดิ</span><span class="zh">催促，只对熟人</span></div>
+  </div>
+
+  <div style="margin-top:6mm;border:.5pt solid var(--line);padding:3.2mm 4mm">
+    <div class="lbl" style="margin-top:0">ครับ / ค่ะ / คะ 的分工</div>
+    <div class="note" style="margin-top:1.2mm">
+      <b>ครับ</b>：男性通用，陈述句与问句都用。<b>ค่ะ</b>：女性，用于陈述与回答。<b>คะ</b>：女性，用于提问与请求。
+      写错性别比写错档位更尴尬，因为对方听得出你不是「不熟」，而是「没注意」。
+    </div>
+  </div>
+
+  <div class="foot"><span><b>泰语换挡</b> · 句尾语气词</span><span>06 / 08</span></div>
+</section>
+
+<!-- ============ 07 流行语 ============ -->
+<section class="sheet" id="01-register-p7">
+  <div class="kick">07 · SLANG APPENDIX</div>
+  <h1>流行语：寿命最短的一层</h1>
+  <div class="sub">能听懂就够了，不必急着用。这一层的词通常只有一两年新鲜度。</div>
+  <div class="rule"></div>
+
+  <div class="words" style="margin-top:6mm">
+    <div class="word"><div class="w">ชีเสิร์ฟ</div><div class="m">来自英语 she served，夸人「太会了」——穿搭、发言、反击都可用</div><div class="s">2026 年初盘点在列</div></div>
+    <div class="word"><div class="w">อ่อม</div><div class="m">垮、没劲，专形容不好笑的梗</div><div class="s">2026 年初盘点在列</div></div>
+    <div class="word"><div class="w">ฮ้อบ</div><div class="m">饭圈反应：磕到憋笑</div><div class="s">2025 年盘点在列</div></div>
+    <div class="word"><div class="w">เหยิน</div><div class="m">笑到藏不住</div><div class="s">2025 年盘点在列</div></div>
+    <div class="word"><div class="w">ผมดื้อหวี</div><div class="m">头发不服管（字面：头发倔，不肯被梳）</div><div class="s">2026 年初盘点在列</div></div>
+    <div class="word"><div class="w">5656</div><div class="m">哈哈哈——泰语 5 读 <span class="th">ห้า</span>（ha），数字串就是笑声</div><div class="s">2025 年初盘点，已算老玩法</div></div>
+    <div class="word"><div class="w">จึ้ง</div><div class="m">绝了、震撼——2024 年的词，现在听着已经有点旧</div><div class="s">2024 流行，2026 仍在用</div></div>
+    <div class="word" style="border-color:var(--gold);background:#fffaf0"><div class="w">ระดับภาษา</div><div class="m">不是流行语，是这条资料的题目：语域、语言的档位</div><div class="s">正式术语，长期有效</div></div>
+  </div>
+
+  <div style="margin-top:6mm;border-left:1.6pt solid var(--red);padding-left:4mm">
+    <div class="lbl" style="margin-top:0;color:var(--red)">证据边界（重要）</div>
+    <div class="note" style="font-size:8.4pt;line-height:1.8">
+      上面这些词来自泰媒的年度／半年盘点（Motive Influence 2026-02-12、Matichon 2025-12-26、Sanook Campus 2025-12-15、MarketingOops 2025-02-18），
+      <b>不是使用率排名</b>，也不代表泰国全国青年都在用。本机的网页正文抓取被网络策略拦截，只读到搜索摘要与多家一致的表述，没有逐页读完原文。
+      另外，<span class="th">จึ้ง</span> 属于 2024 年的词，列在这里是为了说明「梗会过期」，不是推荐现在用。
+    </div>
+  </div>
+
+  <div style="margin-top:6mm;border-top:.8pt solid var(--line);padding-top:4mm">
+    <div class="lbl" style="margin-top:0">顺序建议</div>
+    <div class="lead">先学骨架（第 1–5 档的句式与礼貌层级），再捡梗。反过来做，会出现「满嘴流行语、但对房东说不出一句完整的客气话」的组合。</div>
+  </div>
+
+  <div class="foot"><span><b>泰语换挡</b> · 流行语附录</span><span>07 / 08</span></div>
+</section>
+
+<!-- ============ 08 练习 + 边界 ============ -->
+<section class="sheet" id="01-register-p8">
+  <div class="kick">08 · PRACTICE</div>
+  <h1>五道练习</h1>
+  <div class="sub">不用写答案，出声说。说完再对页尾的参考。</div>
+  <div class="rule"></div>
+
+  <div class="q"><div class="qh">1 · 判档位</div><div class="qa">你要请房东帮忙看一下合同里的一个条款。用哪一档？先说出你选的档位，再补一句完整的话。</div></div>
+  <div class="q"><div class="qh">2 · 改口语</div><div class="qa">把 <span class="th">เนื่องจากฝนตกหนัก การเดินทางจึงล่าช้า</span> 改成能对同事说的版本。</div></div>
+  <div class="q"><div class="qh">3 · 改书面</div><div class="qa">把聊天里的 <span class="th">คับ</span> 写进一封正式邮件，应该写什么？为什么不能照抄？</div></div>
+  <div class="q"><div class="qh">4 · 换缓冲</div><div class="qa">把 <span class="th">ดูเอกสารให้หน่อยครับ</span> 依次加回 <span class="th">ช่วย</span>、<span class="th">รบกวน</span>，说出三句在语气上的差别。</div></div>
+  <div class="q"><div class="qh">5 · 反向判断</div><div class="qa">听到一句 <span class="th">ไปกินหมูกระทะป่ะ</span>，对方大概率把你放在哪一档？如果换成对上司说，该怎么改？</div></div>
+
+  <div class="ans">
+    <div class="lbl" style="margin-top:0">参考（不是唯一答案）</div>
+    <div class="row"><b>1</b> 第 3 档。例：<span class="th">รบกวนช่วยดูสัญญาให้หน่อยครับ</span>——房东是「熟但不亲」，四层缓冲刚好。</div>
+    <div class="row"><b>2</b> <span class="th">ฝนตกหนักมาก รถติดเลย</span>（拆句 + <span class="th">เลย</span> 收尾）。</div>
+    <div class="row"><b>3</b> 写 <span class="th">ครับ</span>。<span class="th">คับ</span> 是口语发音写法，不是新标准，正式文本照抄会被读成不认真。</div>
+    <div class="row"><b>4</b> 只加 <span class="th">ครับ</span>：礼貌但直接；加 <span class="th">ช่วย</span>：变成请求；再加 <span class="th">รบกวน</span>：先承认打扰，最软。</div>
+    <div class="row"><b>5</b> 第 4–5 档（朋友／熟人）。对上司改：<span class="th">รบกวนช่วย…ด้วยครับ</span>，或直接说 <span class="th">ไปทานหมูกระทะกันไหมครับ</span>。</div>
+  </div>
+
+  <div style="margin-top:5mm;border-left:1.6pt solid var(--gold);padding-left:4mm">
+    <div class="lbl" style="margin-top:0;color:var(--gold)">这套资料的边界</div>
+    <div class="note" style="font-size:8pt;line-height:1.8">
+      1）五档是教学框架，不是国家标准，也有教材只分三档。<br>
+      2）本页与第 3–4 页的例句是按语法与常用搭配自拟的，没有逐句请母语者审校；发布或教学前值得请母语者听一遍。<br>
+      3）第 7 页流行语的证据等级只到「泰媒盘点 + 搜索摘要」。<br>
+      4）影片与音频为合成语音，只保证「可听懂」，语气词的说服力靠真人语调。
+    </div>
+  </div>
+
+  <div class="foot"><span><b>泰语换挡</b> · 练习与边界</span><span>08 / 08</span></div>
+</section>
+
+</body>
+</html>

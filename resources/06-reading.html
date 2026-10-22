@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>泰语拼读 · 罗马音之外</title>
+<style>
+/* ============================================================
+   泰语学习资料 · 共用版式（A4 竖版）
+   浅色纸底 + 金/红/绿三色标记。屏幕上是卡片，打印直接出 PDF。
+   版心 178mm（A4 210 − 左右各 16），所有字号用 pt，保证打印尺寸稳定。
+   —— 这份 CSS 是全套资料册的唯一版式来源：
+      books/*.html 只写内容，tools/build.mjs 把它内联进最终 HTML。
+   ============================================================ */
+@page { size: A4; margin: 0; }
+:root{
+  --paper:#fbf8f1; --ink:#241f18; --dim:#6d6557; --faint:#9a9181;
+  --line:#d9cdb6; --wash:#f3ecdd; --wash2:#efe6d4;
+  --gold:#9c6f22; --red:#a2352c; --green:#2c6650; --blue:#265a78;
+  --zh:"Songti SC","Noto Serif SC",serif;
+  --zhs:"PingFang SC","Noto Sans SC","Heiti SC",sans-serif;
+  --th:"Thonburi","Sukhumvit Set","Noto Sans Thai",serif;
+  --mono:"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#e6dfd0;font-family:var(--zhs);color:var(--ink);-webkit-font-smoothing:antialiased}
+.sheet{width:210mm;height:297mm;background:var(--paper);position:relative;overflow:hidden;
+       padding:15mm 16mm 16mm;page-break-after:always;break-after:page}
+.sheet:last-child{page-break-after:auto;break-after:auto}
+@media screen{body{display:flex;flex-direction:column;align-items:center;gap:7mm;padding:9mm 0}
+  .sheet{box-shadow:0 1.5mm 5mm rgba(40,30,10,.22)}}
+@media print{body{background:#fff}.sheet{box-shadow:none}}
+
+/* ---------- 页眉 ---------- */
+.kick{font-family:var(--mono);font-size:7.5pt;letter-spacing:.28em;color:var(--gold);text-transform:uppercase}
+h1{font-family:var(--zh);font-size:27pt;font-weight:600;line-height:1.15;margin-top:3mm;letter-spacing:.01em}
+h1 em{font-style:normal;color:var(--gold)}
+.sub{font-size:11pt;color:var(--dim);margin-top:3mm;line-height:1.6}
+.rule{height:.5pt;background:linear-gradient(90deg,var(--gold),rgba(156,111,34,.12));margin:5mm 0 0}
+.tag{display:inline-block;font-family:var(--mono);font-size:7pt;letter-spacing:.14em;color:#fff;background:var(--gold);
+     padding:1mm 2.4mm;border-radius:1mm}
+
+/* ---------- 页脚 ---------- */
+.foot{position:absolute;left:16mm;right:16mm;bottom:9mm;display:flex;justify-content:space-between;align-items:baseline;
+      border-top:.5pt solid var(--line);padding-top:2.6mm;font-size:7.6pt;color:var(--faint);letter-spacing:.03em}
+.foot b{color:var(--dim);font-weight:500}
+
+/* ---------- 通用块 ---------- */
+h2{font-family:var(--zh);font-size:15pt;font-weight:600;margin:0 0 3mm}
+h3{font-size:10.5pt;font-weight:600;letter-spacing:.02em}
+.lead{font-size:10.5pt;line-height:1.75;color:#3a332a}
+.note{font-size:8.2pt;line-height:1.65;color:var(--dim)}
+.th{font-family:var(--th);font-size:1.06em;line-height:1.45}
+.zh{font-size:9pt;color:var(--dim);line-height:1.6}
+.mono{font-family:var(--mono);font-size:8pt}
+
+/* ---------- 速查表 ---------- */
+table{width:100%;border-collapse:collapse;font-size:8.6pt;line-height:1.55}
+th{background:var(--wash);text-align:left;font-weight:600;font-size:8pt;letter-spacing:.06em;color:#4a4235;
+   padding:2.2mm 2.4mm;border-bottom:.7pt solid var(--line)}
+td{padding:2.2mm;border-bottom:.4pt solid var(--line);vertical-align:top}
+td.g{font-family:var(--th);font-size:11.5pt;line-height:1.7}
+tr:last-child td{border-bottom:.7pt solid var(--line)}
+.no{font-family:var(--mono);font-size:8pt;color:var(--gold);letter-spacing:.1em}
+.ttl{font-weight:600;font-size:9.4pt;margin-top:1mm}
+.sm{font-size:7.8pt;color:var(--dim)}
+.pill{display:inline-block;font-size:7pt;padding:.5mm 1.6mm;border:.4pt solid currentColor;border-radius:1mm;margin-right:1mm}
+.chg{display:grid;grid-template-columns:repeat(3,1fr);gap:0 8mm;margin-top:6mm}
+.chg .c{border-top:1.4pt solid var(--gold);padding-top:2.6mm}
+.chg h3{font-size:9.4pt}
+.chg p{font-size:8.2pt;color:var(--dim);line-height:1.75;margin-top:1.2mm}
+.chg .g{font-family:var(--th);font-size:11pt;margin-top:1.2mm;line-height:1.65}
+.red{color:var(--red)} .green{color:var(--green)} .gold{color:var(--gold)} .blue{color:var(--blue)} .dim{color:var(--dim)}
+
+/* ---------- 逐档详解 ---------- */
+.detail{border-top:.8pt solid var(--line);padding-top:3.4mm;margin-top:3.4mm}
+.detail.first{border-top:none;padding-top:0}
+.dhead{display:flex;align-items:baseline;gap:3mm;margin-bottom:2.5mm}
+.dno{font-family:var(--mono);font-size:9pt;color:#fff;background:var(--gold);padding:1mm 2mm;letter-spacing:.08em}
+.dname{font-family:var(--zh);font-size:13pt;font-weight:600}
+.duse{font-size:8.6pt;color:var(--dim);margin-left:auto;text-align:right}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 6mm}
+.lbl{font-family:var(--mono);font-size:7pt;letter-spacing:.16em;color:var(--faint);margin:2mm 0 1mm}
+.ex{border-left:1.2pt solid var(--wash2);padding-left:3mm;margin:1.5mm 0}
+.ex .th{font-size:12pt}
+.ex .zh{font-size:8.2pt}
+.warn{font-size:8.2pt;color:#4a4235;background:rgba(162,53,44,.06);border-left:1.2pt solid var(--red);
+      padding:2mm 3mm;line-height:1.6;margin-top:2mm}
+
+/* ---------- 坑 / 改写 ---------- */
+.trap{margin-top:4mm;border:.5pt solid var(--line);background:#fffdf8}
+.trap .thd{display:flex;align-items:baseline;gap:2.5mm;padding:2.2mm 3mm;background:var(--wash2)}
+.trap .thd .n{font-family:var(--mono);font-size:8pt;color:var(--red);letter-spacing:.1em}
+.trap .thd h3{font-size:9.6pt}
+.trap .rows{padding:1mm 3mm 2.6mm}
+.arow{display:grid;grid-template-columns:16mm 1fr;gap:2mm;padding:2.3mm 0;border-bottom:.3pt dotted var(--line);align-items:baseline}
+.arow:last-child{border-bottom:none}
+.arow .k{font-size:7.6pt;color:var(--faint);font-family:var(--mono);letter-spacing:.06em}
+.arow .v{font-size:9pt;line-height:1.7}
+.arow .v .th{font-size:11.5pt}
+
+/* ---------- 词表 ---------- */
+.words{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+.word{border:.5pt solid var(--line);background:#fffdf8;padding:2.4mm 3mm}
+.word .w{font-family:var(--th);font-size:12.5pt}
+.word .m{font-size:8.2pt;color:#3a332a;margin-top:.8mm;line-height:1.5}
+.word .s{font-size:7.2pt;color:var(--faint);margin-top:1mm}
+
+/* ---------- 练习 ---------- */
+.q{margin-top:3.5mm}
+.q .qh{font-size:9.2pt;font-weight:600}
+.q .qa{font-size:8.4pt;color:var(--dim);margin-top:1mm;line-height:1.6}
+.blank{display:inline-block;min-width:26mm;border-bottom:.5pt solid var(--faint);height:3.6mm}
+.ans{border-top:.5pt solid var(--line);margin-top:4mm;padding-top:3mm}
+.ans .row{font-size:8pt;color:var(--dim);line-height:1.75}
+.ans b{color:var(--ink);font-weight:600}
+
+/* ---------- 封面 ---------- */
+.cover{display:flex;flex-direction:column;height:100%;padding-bottom:14mm}
+.cover h1{font-size:44pt;margin-top:6mm;line-height:1.08}
+.cover .sub{font-size:12pt;margin-top:5mm;color:#3a332a}
+.lede{font-family:var(--zh);font-size:14pt;line-height:1.9;margin-top:9mm;padding-left:5mm;border-left:1.6pt solid var(--gold)}
+.toc{margin-top:11mm;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:0 9mm}
+.toc a,.toc div{display:grid;grid-template-columns:8mm 1fr 10mm;align-items:baseline;gap:2mm;
+     padding:2.2mm 0;border-top:.4pt solid var(--line);font-size:9.2pt;color:#3a332a}
+.toc .n{font-family:var(--mono);font-size:7.4pt;color:var(--gold);letter-spacing:.06em}
+.toc .p{font-family:var(--mono);font-size:7.4pt;color:var(--faint);text-align:right}
+.mini{margin-top:10mm;border-top:.5pt solid var(--line)}
+.mini .r{display:grid;grid-template-columns:14mm 1fr 62mm;gap:3mm;align-items:baseline;padding:1.6mm 0;border-bottom:.3pt dotted var(--line)}
+.mini .k{font-family:var(--mono);font-size:7.2pt;color:var(--gold);letter-spacing:.08em}
+.mini .th{font-size:11pt;line-height:1.5}
+.mini .zh{font-size:8.4pt;color:var(--dim);text-align:right}
+.quote{margin-top:9mm;font-family:var(--zh);font-size:11.5pt;line-height:1.95;color:#3a332a;padding-left:5mm;border-left:1.6pt solid var(--line)}
+.meta{margin-top:auto;font-size:8.6pt;color:#3a332a}
+.meta .row{display:grid;grid-template-columns:22mm 1fr;gap:3mm;padding:1.8mm 0;border-top:.4pt solid var(--line)}
+.meta .k{font-family:var(--mono);font-size:7.2pt;color:var(--faint);letter-spacing:.1em;padding-top:.6mm}
+
+/* ============================================================
+   以下为全套共用的补充组件（在 register 册原版式基础上扩展）
+   ============================================================ */
+
+/* ---------- 通用网格 ---------- */
+.g2,.g3,.g4{display:grid;gap:0 8mm;margin-top:5mm}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2>.c,.g3>.c,.g4>.c{border-top:1.4pt solid var(--gold);padding-top:2.6mm}
+.g2>.c h3,.g3>.c h3,.g4>.c h3{font-size:9.4pt}
+.g2>.c p,.g3>.c p,.g4>.c p{font-size:8.2pt;color:var(--dim);line-height:1.75;margin-top:1.2mm}
+.g2>.c .g,.g3>.c .g,.g4>.c .g{font-family:var(--th);font-size:11pt;margin-top:1.2mm;line-height:1.65}
+
+/* ---------- 元音格子 ---------- */
+.vgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:2.4mm;margin-top:5mm}
+.vgrid.g5{grid-template-columns:repeat(5,1fr)}
+.vtile{border:.5pt solid var(--line);background:#fffdf8;padding:2.2mm 1.6mm;text-align:center}
+.vtile .sh{font-family:var(--th);font-size:13.5pt;line-height:1.35}
+.vtile .py{font-family:var(--mono);font-size:6.8pt;color:var(--faint);margin-top:.9mm;letter-spacing:.02em}
+.vtile .lb{font-size:7.4pt;color:var(--dim);margin-top:.7mm;line-height:1.4}
+.vtile.short{border-color:var(--blue);background:#f6fafc}
+.vtile.long{border-color:var(--gold);background:#fffaf0}
+.vtile.comp{border-color:var(--green);background:#f5faf7}
+.vgrid .hd{font-family:var(--mono);font-size:6.8pt;letter-spacing:.08em;color:var(--faint);
+            text-align:center;padding-bottom:1mm;border-bottom:.4pt solid var(--line)}
+
+/* ---------- 声调卡 ---------- */
+.tones{display:grid;grid-template-columns:repeat(5,1fr);gap:0 4mm;margin-top:6mm}
+.tone{border-top:1.4pt solid var(--gold);padding-top:2.6mm}
+.tone .mark{font-family:var(--th);font-size:19pt;line-height:1.2}
+.tone .nm{font-family:var(--zh);font-size:10.5pt;font-weight:600;margin-top:1.4mm}
+.tone .en{font-family:var(--mono);font-size:7pt;color:var(--faint);letter-spacing:.08em;margin-top:.6mm}
+.tone .ds{font-size:8pt;color:var(--dim);line-height:1.6;margin-top:1.4mm}
+.tone .ex{font-family:var(--th);font-size:10.5pt;margin-top:1.4mm;line-height:1.5}
+.tone .exz{font-size:7.6pt;color:var(--dim);margin-top:.6mm}
+
+/* ---------- 步骤条 ---------- */
+.steps{margin-top:5mm}
+.step{display:grid;grid-template-columns:11mm 1fr;gap:3mm;padding:2.8mm 0;border-bottom:.4pt solid var(--line);align-items:baseline}
+.step:last-child{border-bottom:none}
+.step .n{font-family:var(--mono);font-size:8.6pt;color:#fff;background:var(--gold);padding:.9mm 1.6mm;text-align:center;letter-spacing:.06em}
+.step .t{font-size:10pt;font-weight:600}
+.step .d{font-size:8.4pt;color:var(--dim);line-height:1.65;margin-top:.8mm}
+
+/* ---------- 来源清单 ---------- */
+.src{margin-top:5mm;border-top:.6pt solid var(--line)}
+.src .r{display:grid;grid-template-columns:9mm 1fr;gap:3mm;padding:2.2mm 0;border-bottom:.3pt dotted var(--line);align-items:baseline}
+.src .k{font-family:var(--mono);font-size:7.2pt;color:var(--gold);letter-spacing:.06em}
+.src .v{font-size:8.2pt;line-height:1.7;color:#3a332a}
+.src .v code{font-family:var(--mono);font-size:7.4pt;color:var(--dim);word-break:break-all}
+.star{color:var(--gold);font-weight:600}
+.star2{color:var(--blue);font-weight:600}
+
+/* ---------- 提示框 ---------- */
+.box{border:.5pt solid var(--line);background:var(--wash);padding:3.4mm 4mm;margin-top:5mm}
+.box .bt{font-family:var(--mono);font-size:7.4pt;letter-spacing:.16em;color:var(--gold)}
+.box .bd{font-size:8.6pt;line-height:1.75;color:#3a332a;margin-top:1.8mm}
+.box.warnb{background:rgba(162,53,44,.06);border-color:var(--red)}
+.box.warnb .bt{color:var(--red)}
+.box.greenb{background:rgba(44,102,80,.06);border-color:var(--green)}
+.box.greenb .bt{color:var(--green)}
+.box.blueb{background:rgba(38,90,120,.06);border-color:var(--blue)}
+.box.blueb .bt{color:var(--blue)}
+
+/* ---------- 对照（左错 / 右对） ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:0 6mm;margin-top:4mm}
+.duo .bad{border-left:1.4pt solid var(--red);padding-left:3mm}
+.duo .good{border-left:1.4pt solid var(--green);padding-left:3mm}
+.duo .cap{font-family:var(--mono);font-size:7pt;letter-spacing:.14em;color:var(--faint);margin-bottom:1.2mm}
+.duo .bad .cap{color:var(--red)} .duo .good .cap{color:var(--green)}
+.duo .th{font-size:11.5pt}
+.duo .zh{font-size:8.2pt;margin-top:.8mm}
+
+/* ---------- 大字泰文 ---------- */
+.bigth{font-family:var(--th);font-size:15pt;line-height:1.5}
+.mid{font-family:var(--th);font-size:13pt;line-height:1.55}
+.rt{font-family:var(--mono);font-size:7.6pt;color:var(--faint);letter-spacing:.02em}
+
+/* ---------- 目录（全集用） ---------- */
+.setlist{margin-top:8mm}
+.setlist .r{display:grid;grid-template-columns:12mm 1fr 34mm 12mm;gap:3mm;align-items:baseline;
+     padding:2.6mm 0;border-top:.5pt solid var(--line)}
+.setlist .r.head{border-top:1pt solid var(--gold);padding-bottom:1.6mm}
+.setlist .r.head span{font-family:var(--mono);font-size:7.2pt;letter-spacing:.14em;color:var(--faint)}
+.setlist .n{font-family:var(--mono);font-size:8pt;color:var(--gold);letter-spacing:.08em}
+.setlist .t{font-size:11pt;font-weight:600}
+.setlist .d{font-size:8pt;color:var(--dim);line-height:1.5;margin-top:.6mm}
+.setlist .p{font-family:var(--mono);font-size:7.6pt;color:var(--faint);text-align:right}
+.setlist .pg{font-family:var(--mono);font-size:8.4pt;color:var(--dim);text-align:right}
+
+/* ============================================================
+   手机阅读（只作用于屏幕，不影响 A4 打印与 PDF）
+   out/*.html 由 build.mjs 注入 viewport meta，窄屏时把 A4 页摊成单栏。
+   断点 760px 低于 build.mjs 审计用的 794px 视口，所以不影响版面审计。
+   ============================================================ */
+@media screen and (max-width:760px){
+  body{padding:0;gap:0;display:block;background:var(--paper)}
+  .sheet{width:100%;height:auto;min-height:0;overflow:visible;page-break-after:auto;
+         padding:7mm 5mm 8mm;box-shadow:none}
+  .sheet + .sheet{border-top:2px solid rgba(120,100,70,.18)}
+  .foot{position:static;margin-top:8mm}
+
+  /* 封面与目录：A4 的满高撑不满手机屏，改成正常流 */
+  .cover{height:auto;padding-bottom:2mm}
+  .cover h1{font-size:29pt;margin-top:4mm}
+  .cover .sub{font-size:11pt}
+  .lede{font-size:12pt;line-height:1.85;margin-top:7mm}
+  .quote{font-size:10.5pt;margin-top:7mm}
+  .meta{margin-top:7mm}
+
+  /* 多栏一律改单栏或双栏 */
+  .toc,.two,.duo,.words,.g2,.g3,.g4,.chg{grid-template-columns:1fr;gap:0}
+  .toc{grid-auto-flow:row;grid-template-rows:none}
+  .g2>.c,.g3>.c,.g4>.c,.chg .c{margin-top:4mm}
+  .words .word{margin-top:3mm}
+  .tones{grid-template-columns:1fr 1fr;gap:0 5mm}
+  .vgrid,.vgrid.g5{grid-template-columns:repeat(4,1fr);gap:2mm}
+
+  /* 列表型网格：收掉固定列宽 */
+  .mini .r{grid-template-columns:12mm 1fr}
+  .mini .zh{grid-column:2;text-align:left}
+  .meta .row{grid-template-columns:22mm 1fr}
+  .arow{grid-template-columns:12mm 1fr}
+  .step{grid-template-columns:9mm 1fr}
+  .src .r{grid-template-columns:8mm 1fr}
+  .setlist .r{grid-template-columns:10mm 1fr}
+  .setlist .r.head{display:none}
+  .setlist .pg{grid-column:2;text-align:left}
+  .setlist .p{display:none}
+  .dhead{flex-wrap:wrap;row-gap:1mm}
+  .duse{margin-left:0;text-align:left;width:100%}
+
+  /* 表格：A4 的 3–5 列在 390px 里塞不下，改成表内横向滚动，不要挤成一列一字 */
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+        font-size:8pt;line-height:1.55}
+  th,td{max-width:58vw;padding:1.8mm 1.6mm}
+  th{white-space:nowrap}
+  /* A4 里写死的列宽（如 width:44mm）在手机上会挤掉最后一列，改成按内容分配 */
+  th[style],td[style]{width:auto!important}
+  td.g{font-size:11pt}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ 01 封面 ============ -->
+<section class="sheet" id="06-reading-p1">
+  <div class="cover">
+    <div>
+      <div class="kick">THAI READING · แจกลูกสะกดคำ · REFERENCE</div>
+      <h1>拼读<em>三步</em></h1>
+      <div class="sub">罗马音之外的三样东西 · 学习资料 <span style="color:var(--faint)">/</span> 中文母语者版</div>
+      <div class="rule"></div>
+    </div>
+
+    <div class="lede">罗马音能把泰文念出来，<br>但不标调、不分长短、<em style="color:var(--gold)">不分声母类别</em>。</div>
+
+    <div class="toc">
+      <div><span class="n">01</span><span>封面与使用说明</span><span class="p">p.1</span></div>
+      <div><span class="n">02</span><span>罗马音藏起来的三样东西</span><span class="p">p.2</span></div>
+      <div><span class="n">03</span><span>一个 khao，四个词</span><span class="p">p.3</span></div>
+      <div><span class="n">04</span><span>44 个字母，21 个音；三组声母</span><span class="p">p.4</span></div>
+      <div><span class="n">05</span><span>泰国小学的三步拼读法</span><span class="p">p.5</span></div>
+      <div><span class="n">06</span><span>长短与死活：拼读的最后一步</span><span class="p">p.6</span></div>
+      <div><span class="n">07</span><span>地名陷阱：Khao San 不是「考山」</span><span class="p">p.7</span></div>
+      <div><span class="n">08</span><span>五道练习 + 参考 + 资料边界</span><span class="p">p.8</span></div>
+    </div>
+
+    <div class="mini">
+      <div class="r"><span class="k">声调</span><span class="th">ข้าว · ข่าว · เขา · เข้า</span><span class="zh">四个词，罗马音全是 khao</span></div>
+      <div class="r"><span class="k">类别</span><span class="th">ก · ข · ค</span><span class="zh">三个字母，两个罗马符号</span></div>
+      <div class="r"><span class="k">长短</span><span class="th">ทัน · ทาน</span><span class="zh">同调不同词，只差长度</span></div>
+    </div>
+
+    <div class="quote">罗马音是给街牌用的，不是给读音用的。<br>要读准，得回到字母本身。</div>
+
+    <div class="meta">
+      <div class="row"><div class="k">适用</div><div>已认完字母表、能用罗马音「看个大概」但读不准的学习者；准备去泰国旅行、想读街牌与菜单的人。</div></div>
+      <div class="row"><div class="k">怎么用</div><div>第 2–3 页看清罗马音缺什么；第 4 页是声母三类；第 5 页是拼读流程；第 6 页接元音与音节；第 7 页用真实地名验收。</div></div>
+      <div class="row"><div class="k">配套</div><div>同名影片《泰语拼读 · 罗马音之外》169 秒，中文旁白——拼读的顺序要跟着念一遍才记得住。</div></div>
+      <div class="row"><div class="k">边界</div><div>RTGS 是泰国官方转写系统，本册说的是它<b>作为读音工具</b>不够用，不是说它写错了。详见 p.8。</div></div>
+      <div class="row"><div class="k">版本</div><div class="mono">2026-10 · v1 · 与《泰语拼读》成片同源</div></div>
+    </div>
+  </div>
+  <div class="foot"><span><b>泰语拼读</b> · 罗马音之外</span><span>01 / 08</span></div>
+</section>
+
+<!-- ============ 02 三样东西 ============ -->
+<section class="sheet" id="06-reading-p2">
+  <div class="kick">02 · WHAT ROMANIZATION DROPS</div>
+  <h1>罗马音藏起来的三样东西</h1>
+  <div class="sub">RTGS（泰国官方转写）的设计目标是「街牌上写得下、外国人看得懂」，不是「读得准」。为此它丢了三样东西。</div>
+  <div class="rule"></div>
+
+  <div class="chg" style="margin-top:6mm">
+    <div class="c"><h3>① 声调</h3><div class="g">khao → ?</div><p>RTGS 不标调。同一个 khao 可以是低声、降调或升调，意思完全不同。</p></div>
+    <div class="c"><h3>② 元音长短</h3><div class="g">a vs aa</div><p>长短在泰语里是区分词的，罗马音常常只写一个 a。</p></div>
+    <div class="c"><h3>③ 声母类别</h3><div class="g">ก / ข / ค → k, kh, kh</div><p>中、高、低三组在罗马音里被合并，而类别恰恰决定声调。</p></div>
+  </div>
+
+  <table style="margin-top:7mm">
+    <thead><tr><th style="width:30mm">丢掉的</th><th style="width:52mm">泰文里靠什么表达</th><th>读错会怎样</th></tr></thead>
+    <tbody>
+      <tr><td>声调</td><td>声调符号 + 声母类别 + 音节死活</td><td>同一个拼法读成另一个词（见 p.3）</td></tr>
+      <tr><td>长短</td><td>元音符号本身（或符号脱落）</td><td>ทัน / ทาน 这类词直接换意思</td></tr>
+      <tr><td>类别</td><td>字母本身属于中／高／低组</td><td>同一个调号读出不同调（见 p.4）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box warnb" style="margin-top:6mm;padding:3mm 4mm">
+    <div class="bt">结论</div>
+    <div class="bd">罗马音适合「认路、认店名」，不适合「学发音」。想读准，必须回到字母：看它属于哪组、元音长短、有没有调号——这三件事罗马音一件都没给你。</div>
+  </div>
+
+  <div class="foot"><span><b>泰语拼读</b> · 罗马音缺什么</span><span>02 / 08</span></div>
+</section>
+
+<!-- ============ 03 khao ============ -->
+<section class="sheet" id="06-reading-p3">
+  <div class="kick">03 · ONE SPELLING, FOUR WORDS</div>
+  <h1>一个 khao，四个词</h1>
+  <div class="sub">这四个词的罗马音写法完全一样（khao），但泰文写法、声调、意思都不同。</div>
+  <div class="rule"></div>
+
+  <table style="margin-top:3mm">
+    <thead><tr><th style="width:22mm">泰文</th><th style="width:28mm">罗马音（RTGS）</th><th style="width:40mm">实际读音</th><th>意思 / 差别</th></tr></thead>
+    <tbody>
+      <tr><td class="g" style="font-size:15pt">เขา</td><td class="mono">khao</td><td>khǎo（升调）</td><td>他 / 她；山</td></tr>
+      <tr><td class="g" style="font-size:15pt">ข่าว</td><td class="mono">khao</td><td>khàao（低声）</td><td>消息、新闻</td></tr>
+      <tr><td class="g" style="font-size:15pt">ข้าว</td><td class="mono">khao</td><td>khâao（降调，长元音）</td><td>米、饭</td></tr>
+      <tr><td class="g" style="font-size:15pt">เข้า</td><td class="mono">khao</td><td>khâo（降调，短元音）</td><td>进、进入</td></tr>
+    </tbody>
+  </table>
+
+  <div class="detail" style="margin-top:6mm">
+    <div class="dhead"><span class="dno">A</span><span class="dname">差别在哪</span><span class="duse">三处，罗马音一处都没写</span></div>
+    <div class="two">
+      <div>
+        <div class="lead">四个词的声母都是 <span class="th">ข</span>（高组），所以这一组不需要跨组比较：无符号、活音节 → 升调（เขา）；加 ไม้เอก → 低声（ข่าว）；加 ไม้โท → 降调（ข้าว、เข้า）。</div>
+        <div class="lbl">结果</div>
+        <div class="lead">四个词读出三个调，其中两个同调（ข้าว / เข้า）——它们靠的就是元音长短分开。</div>
+      </div>
+      <div>
+        <div class="lbl">② 长短</div>
+        <div class="lead"><span class="th">ข้าว</span> 是长元音 aa，<span class="th">เข้า</span> 是短元音 a，两者都读降调，但元音长度不同 → 两个不同的词。</div>
+        <div class="lbl">③ 类别</div>
+        <div class="lead">这一组恰好同组。换一个音（比如 ก / ข / ค）时，类别就变成第三个变量——见 p.4。</div>
+      </div>
+    </div>
+    <div class="warn">声调公式的完整表在《声调》那本 p.4。本页只给这四个词的结论，不下通用规则——通用规则需要「组 × 死活 × 调号」三项一起看。</div>
+  </div>
+
+  <div class="foot"><span><b>泰语拼读</b> · 一个 khao</span><span>03 / 08</span></div>
+</section>
+
+<!-- ============ 04 声母三类 ============ -->
+<section class="sheet" id="06-reading-p4">
+  <div class="kick">04 · CONSONANT CLASSES</div>
+  <h1>44 个字母，21 个音，三组</h1>
+  <div class="sub">字母比音多，是因为历史上保留了区分；这些区分在罗马音里被抹平，在泰文里却决定声调。</div>
+  <div class="rule"></div>
+
+  <table style="margin-top:3mm">
+    <thead><tr><th style="width:22mm">泰文</th><th style="width:26mm">RTGS</th><th style="width:26mm">类别</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td class="g">ก</td><td class="mono">k</td><td>中</td><td rowspan="3">三个字母、两种罗马符号；ข 与 ค 在 RTGS 里都写 kh，类别信息完全丢失。</td></tr>
+      <tr><td class="g">ข</td><td class="mono">kh</td><td>高</td></tr>
+      <tr><td class="g">ค</td><td class="mono">kh</td><td>低</td></tr>
+      <tr><td class="g">ด</td><td class="mono">d</td><td>中</td><td rowspan="3">同样的合并出现在 d / t / th、b / p / ph 上。</td></tr>
+      <tr><td class="g">ต</td><td class="mono">t</td><td>中</td></tr>
+      <tr><td class="g">ท</td><td class="mono">th</td><td>低</td></tr>
+    </tbody>
+  </table>
+
+  <div class="g3" style="margin-top:5mm">
+    <div class="c"><h3>中 · 9 个</h3><div class="g">ก จ ด ต บ ป อ …</div><p>完整名单 9 个。不带符号读中平，是最「标准」的一组。</p></div>
+    <div class="c"><h3>高 · 11 个</h3><div class="g">ข ฉ ถ ผ ห …</div><p>完整名单 11 个。不带符号、活音节读升调。</p></div>
+    <div class="c"><h3>低 · 24 个</h3><div class="g">ค ง ช ท น ม ร ล ว …</div><p>完整名单 24 个，数量最多，也是「符号会改名字」的那组。</p></div>
+  </div>
+
+  <div class="box" style="margin-top:5mm;padding:3mm 4mm">
+    <div class="bt">同一个调号，三种结果</div>
+    <div class="bd">
+      中组 + ไม้เอก → <span class="th">ก่</span> 低声；高组 + ไม้เอก → <span class="th">ข่</span> 低声；低组 + ไม้เอก → <span class="th">ค่</span> 降调。<br>
+      罗马音把 ก / ข / ค 写成 k / kh / kh，于是这三种差别在拼写上完全看不出来。
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:3mm">「44 个辅音字母对应 21 个辅音音」是通行的清点口径，传统计数含已废弃的 ฃ ฅ；不同教材的数字可能略有出入。</div>
+
+  <div class="foot"><span><b>泰语拼读</b> · 声母三类</span><span>04 / 08</span></div>
+</section>
+
+<!-- ============ 05 三步拼读 ============ -->
+<section class="sheet" id="06-reading-p5">
+  <div class="kick">05 · THE THREE STEPS</div>
+  <h1>泰国小学的三步拼读法</h1>
+  <div class="sub">แจกลูกสะกดคำ：拆字母 → 拼音节 → 合声调。泰国教育部基础教育委员会（OBEC）有正式的教学手册。</div>
+  <div class="rule"></div>
+
+  <div class="steps" style="margin-top:5mm">
+    <div class="step"><span class="n">01</span><div><div class="t">读字母名</div><div class="d">把每个辅音读成它的名字（ก = กอ ไก่），不是读音。名字里带 -อ，是为了让你在拼之前先站稳每个字母。</div></div></div>
+    <div class="step"><span class="n">02</span><div><div class="t">拼音节</div><div class="d">辅音 + 元音合成一个音节：ก + า = กา。元音在前、在上、在下的写法不同，但拼的顺序都是「辅音先，元音后」。</div></div></div>
+    <div class="step"><span class="n">03</span><div><div class="t">合声调</div><div class="d">最后加声调：看声母组、音节死活、有没有调号。这一步才是罗马音完全帮不上忙的地方。</div></div></div>
+  </div>
+
+  <div class="detail" style="margin-top:5mm">
+    <div class="dhead"><span class="dno">ABC</span><span class="dname">走一个词：ข้าว</span><span class="duse">饭</span></div>
+    <div class="two">
+      <div>
+        <div class="lbl">拆</div>
+        <div class="lead"><span class="th">ข</span>（高组）+ <span class="th">า</span>（长元音 aa）+ <span class="th">ว</span>（尾音）+ ไม้โท。</div>
+        <div class="lbl">拼</div>
+        <div class="lead">ข + า + ว = ขาว（khaao），此时还没定调。</div>
+      </div>
+      <div>
+        <div class="lbl">定调</div>
+        <div class="lead">高组 + 活音节（有响尾音 ว）+ ไม้โท → 降调。合起来读 khâao。</div>
+        <div class="ex"><div class="th">ข้าว</div><div class="zh">饭（降调）</div></div>
+      </div>
+    </div>
+    <div class="warn">顺序不能反：先按声调猜读音，再倒推字母，会形成「记音不记字」的习惯。真实文本里遇到没见过的词就崩。</div>
+  </div>
+
+  <div class="note" style="margin-top:3mm">音节结构：可带声母簇、一个元音、一个尾音（(C)(C)V(C)）；尾音共六类 /p t k m n ŋ/，加上 y、w 两个滑音。</div>
+
+  <div class="foot"><span><b>泰语拼读</b> · 三步拼读</span><span>05 / 08</span></div>
+</section>
+
+<!-- ============ 06 长短与死活 ============ -->
+<section class="sheet" id="06-reading-p6">
+  <div class="kick">06 · LENGTH &amp; SYLLABLE</div>
+  <h1>拼读的最后一步</h1>
+  <div class="sub">声调不是只有「调号」一个变量。元音长短会改音节死活，死活又改公式。</div>
+  <div class="rule"></div>
+
+  <div class="words" style="margin-top:5mm">
+    <div class="word"><div class="w">ทัน</div><div class="m">来得及（短 a，低组，平调）</div><div class="s">than</div></div>
+    <div class="word"><div class="w">ทาน</div><div class="m">用餐、施与（长 aa，低组，平调）</div><div class="s">thaan</div></div>
+    <div class="word"><div class="w">คัน</div><div class="m">痒（短 a，低组，平调）</div><div class="s">khan</div></div>
+    <div class="word"><div class="w">คาน</div><div class="m">横梁（长 aa，低组，平调）</div><div class="s">khaan</div></div>
+  </div>
+
+  <div class="g2" style="margin-top:5mm">
+    <div class="c"><h3>这两对说明什么</h3><div class="g">同调 · 同组 · 只差长度</div><p>四个词都是低组、都带响尾音 น、都是平调；差别只有元音长短。所以罗马音写 than / thaan 还能区分，写 tan / tan 就彻底丢了信息。</p></div>
+    <div class="c"><h3>为什么长度会改声调</h3><div class="g">长短 → 死活 → 公式</div><p>没有尾音时，长元音算活音节、短元音算死音节；尾音是 ก ด บ 时，长短都算死音节。上一册（元音）第 5 页有完整对照。</p></div>
+  </div>
+
+  <div class="box blueb" style="margin-top:5mm;padding:3mm 4mm">
+    <div class="bt">拼读检查清单</div>
+    <div class="bd">读一个生词，按顺序问四句：① 声母属于哪一组？② 元音是长是短？③ 有没有尾音、尾音是哪一类？④ 有没有调号？四句都有答案，再开口。</div>
+  </div>
+
+  <div class="foot"><span><b>泰语拼读</b> · 长短与死活</span><span>06 / 08</span></div>
+</section>
+
+<!-- ============ 07 地名 ============ -->
+<section class="sheet" id="06-reading-p7">
+  <div class="kick">07 · PLACE NAMES</div>
+  <h1>地名陷阱</h1>
+  <div class="sub">街牌上的罗马音是给不读泰文的人看的。按它念，泰国人常常听不懂。</div>
+  <div class="rule"></div>
+
+  <table style="margin-top:3mm">
+    <thead><tr><th style="width:34mm">街牌写法</th><th style="width:34mm">泰文</th><th style="width:46mm">实际读音</th><th>常见误读</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">Khao San</td><td class="g">ข้าวสาร</td><td>khâao sǎan</td><td>「考山」——第二个音节是升调、长音</td></tr>
+      <tr><td class="mono">Phuket</td><td class="g">ภูเก็ต</td><td>phuu kèt</td><td>「普吉」——重音在第二节，短促收尾</td></tr>
+      <tr><td class="mono">Pattaya</td><td class="g">พัทยา</td><td>phát thá jaa</td><td>「芭提雅」——三个音节，中间是短 a</td></tr>
+    </tbody>
+  </table>
+
+  <div class="g2" style="margin-top:6mm">
+    <div class="c"><h3>Khao San 的坑</h3><div class="g">ข้าวสาร = 米 + 消息？</div><p>字面是「米（ข้าว）+ 新闻/消息（สาร）」，原本是卖米的一条街。注意第一个音节是长元音降调，和「山」的 เขา（升调）不是一回事。</p></div>
+    <div class="c"><h3>Phuket 的坑</h3><div class="g">不是「普克特」</div><p>ภู 是长 uu、平调；เก็ต 是短 e、低声。中文「普吉」的第二个字其实离原音更近，英文拼法反而容易读错。</p></div>
+  </div>
+
+  <div class="warn" style="margin-top:5mm">这三条不是为了纠正游客，而是给出一个可验证的练习：<b>看到街牌先想泰文怎么写</b>，再用四步清单读一遍。读对了，司机和摊主会立刻听懂。</div>
+
+  <div class="foot"><span><b>泰语拼读</b> · 地名陷阱</span><span>07 / 08</span></div>
+</section>
+
+<!-- ============ 08 练习 ============ -->
+<section class="sheet" id="06-reading-p8">
+  <div class="kick">08 · PRACTICE</div>
+  <h1>五道练习</h1>
+  <div class="sub">每题都要求写出「组 / 长短 / 尾音 / 调号」四项中的至少三项。</div>
+  <div class="rule"></div>
+
+  <div class="q"><div class="qh">1 · 拆字母</div><div class="qa">把 <span class="th">ข้าว</span> 拆成「辅音 + 元音 + 尾音 + 调号」四部分。</div></div>
+  <div class="q"><div class="qh">2 · 判类别</div><div class="qa"><span class="th">ก · ข · ค</span> 各属哪一组？RTGS 分别怎么写？</div></div>
+  <div class="q"><div class="qh">3 · 辨长短</div><div class="qa"><span class="th">ทัน</span> 与 <span class="th">ทาน</span> 差在哪？为什么声调相同？</div></div>
+  <div class="q"><div class="qh">4 · 读地名</div><div class="qa">街牌写 Khao San，泰文怎么写？两个音节各是什么调？</div></div>
+  <div class="q"><div class="qh">5 · 纠错</div><div class="qa">有人说「用罗马音就能学泰语发音」。这句话漏了什么？</div></div>
+
+  <div class="ans">
+    <div class="lbl" style="margin-top:0">参考（不是唯一答案）</div>
+    <div class="row"><b>1</b> ข（高组）+ า（长 aa）+ ว（响尾音）+ ไม้โท → 降调。</div>
+    <div class="row"><b>2</b> ก 中组 → k；ข 高组 → kh；ค 低组 → kh。后两者在 RTGS 里合并。</div>
+    <div class="row"><b>3</b> 元音长短不同（a / aa），都是低组 + น 尾（活音节）+ 无调号 → 平调。</div>
+    <div class="row"><b>4</b> <span class="th">ข้าวสาร</span>；ข้าว 降调、สาร 升调。</div>
+    <div class="row"><b>5</b> 漏了声调、元音长短、声母类别三样；而这三样恰恰是泰语拼读的全部难点。</div>
+  </div>
+
+  <div style="margin-top:5mm;border-left:1.6pt solid var(--gold);padding-left:4mm">
+    <div class="lbl" style="margin-top:0;color:var(--gold)">这套资料的边界</div>
+    <div class="note" style="font-size:8pt;line-height:1.8">
+      1）RTGS 是泰国官方转写系统，本册批评的是它<b>作为读音工具</b>的局限，不是说它写错了或该废除。<br>
+      2）「44 字母 / 21 音」「9 中 / 11 高 / 24 低」是通行清点口径，传统计数含已废弃字母。<br>
+      3）本册不展开 ห นำ 的完整规则、声母簇（ควบกล้ำ）与双元音，这些留给进阶册。<br>
+      4）地名读音按词典条目与常见读法给出，实际口语可能因地区略有差异。<br>
+      5）拼读教学法（แจกลูกสะกดคำ）有 OBEC 手册支持，但「全国每所学校都采用」没有证据，本册没这么说。
+    </div>
+  </div>
+
+  <div class="foot"><span><b>泰语拼读</b> · 练习与边界</span><span>08 / 08</span></div>
+</section>
+
+</body>
+</html>
