@@ -1,6 +1,6 @@
-const CACHE = 'sabai-v8';
+const CACHE = 'sabai-v1.0.0';
 const FILES = [
-  './', './index.html', './manifest.webmanifest', './icon.svg',
+  './', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png',
   './fonts/Sarabun-thai-400.woff2', './fonts/Sarabun-thai-500.woff2', './fonts/Sarabun-thai-600.woff2', './fonts/Sarabun-thai-700.woff2', './fonts/OFL-Sarabun.txt',
   './resources/site/index.html', './resources/phupha-wordfreq.js', './resources/01-register.html', './resources/02-vowels.html',
   './resources/03-tones.html', './resources/04-numerals.html', './resources/05-classifiers.html',
